@@ -6,16 +6,40 @@
 </head>
 <body>
     <h2>Dataset making</h2>
+    <p><a href="index.html">&lt;-- Back to main page</a></p>
     <p>
         For generating spoof utterances I used two bonafide datasets. First of them is in-house dataset "CTU Test" which contains 2169 phonetically rich utterances from 43 speakers. Second one is 
         czech subset from <a href="https://huggingface.co/datasets/facebook/voxpopuli" target="_blank">Voxpopuli</a> containg 62 hours of speech from 138 speakers recorded in Europian parliament.
         More datasets will be used. Too long and too short utterances were ignored.
     </p>
 
+    <h3>Tools</h3>
+    
     <p>
-        <h3>Tools</h3>
+        
 
     </p>
+
+    <h3>Metrics</h3>
+    Several approaches exist for evaluating the quality of synthesized speech. The most commonly used metrics are those derived from the Mean Opinion Score (MOS), such 
+    as the Perceptual Evaluation of Speech Quality (PESQ). However, a major limitation of these metrics is their reliance on a reference signal, which poses challenges when assessing synthetic speech.
+    To address this issue, DNSMOS [<a href="https://github.com/microsoft/DNS-Challenge/tree/master/DNSMOS" target="_blank">code</a>, <a href="https://arxiv.org/pdf/2010.15258" target="_blank">paper</a>] 
+    was considered, as it does not require a reference. While DNSMOS effectively evaluates the acoustic quality of speech, it does not account for the linguistic quality of Czech speech, particularly its 
+    intelligibility. This aspect is crucial given that multilingual and English-trained tools were employed for speech synthesis. 
+
+    <p>
+        Currently, tools capable of assessing the similarity between artificial utterances and native Czech speakers are not readily available, and developing such tools would be excessively time-consuming. 
+        Therefore, an alternative evaluation approach was devised, consisting of three steps. 
+        First, a Czech Automatic Speech Recognition (ASR) model 
+        <a href="https://huggingface.co/arampacha/wav2vec2-large-xlsr-czech" target="_blank">Wav2Vec2-Large-XLSR-53-Czech</a> was used to transcribe the synthesized speech. The underlying assumption is that 
+        higher-quality and more natural speech would yield more accurate transcriptions.
+
+        Second <a href="https://huggingface.co/MU-NLPC/CzeGPT-2">CzeGPT-2</a> was employed to compute the perplexity of both the generated transcription and the reference transcription. 
+        These perplexity values were then normalized by the number of words. Finally, the ratio of the two perplexities was calculated. A higher ratio indicates a more accurate transcription, suggesting better speech quality.
+        
+        
+    </p>
+    <h2>Resuts</h2>
 
 </body>
 </html>
