@@ -5,6 +5,15 @@
     <title>Dataset</title>
 </head>
 <body>
+    <style>
+        table {
+          border:1px solid black;
+        }
+        th,td {
+            padding: 3px;
+            text-align: center;
+        }
+        </style>
     <h2>Dataset making</h2>
     <p><a href="index.html">&lt;-- Back to main page</a></p>
     <p>
@@ -32,6 +41,14 @@
         [Automatically compiled from: <a href="https://github.com/OlaWod/FreeVC/tree/main" target="_blank"> Git Hub</a>] 
     </p>
     <p>
+        <u>kNN-VC:</u> kNN-VC is a lightweight, text-free voice conversion model that leverages self-supervised speech representations and k-nearest neighbors (kNN) 
+        regression for high-quality speaker adaptation. The model extracts speech features from both source and reference utterances using a pretrained self-supervised 
+        model (e.g., HuBERT, WavLM). Each frame in the source representation is replaced by its closest match in the reference using kNN, ensuring content preservation while 
+        transferring speaker characteristics. A pretrained vocoder reconstructs the waveform, producing natural speech. kNN-VC operates without adversarial training or parallel data, offering 
+        a simple yet effective approach to voice conversion with strong speaker similarity and intelligibility. 
+        [Automatically compiled from: <a href="https://github.com/bshall/knn-vc/tree/master"> Git Hub</a>] 
+    </p>
+    <p>
         <u>Seed-VC:</u> Seed-VC is a zero-shot voice conversion model capable of transforming a source speaker’s voice to match a target speaker’s timbre without prior training on the 
         target voice. It extracts linguistic content using pre-trained models like XLSR-large or Whisper-small, while a speaker encoder generates embeddings from a short reference audio 
         sample (1–30 seconds). A decoder and vocoder (e.g., HIFI-GAN, BigVGAN) synthesize natural and intelligible speech. Seed-VC supports real-time processing with an algorithmic delay 
@@ -41,14 +58,7 @@
         [Automatically compiled from: <a href="https://github.com/Plachtaa/seed-vc/tree/main" target="_blank"> Git Hub</a>] 
 
     </p>
-    <p>
-        <u>kNN-VC:</u> kNN-VC is a lightweight, text-free voice conversion model that leverages self-supervised speech representations and k-nearest neighbors (kNN) 
-        regression for high-quality speaker adaptation. The model extracts speech features from both source and reference utterances using a pretrained self-supervised 
-        model (e.g., HuBERT, WavLM). Each frame in the source representation is replaced by its closest match in the reference using kNN, ensuring content preservation while 
-        transferring speaker characteristics. A pretrained vocoder reconstructs the waveform, producing natural speech. kNN-VC operates without adversarial training or parallel data, offering 
-        a simple yet effective approach to voice conversion with strong speaker similarity and intelligibility. 
-        [Automatically compiled from: <a href="https://github.com/bshall/knn-vc/tree/master"> Git Hub</a>] 
-    </p>
+
 
     
   
@@ -73,6 +83,65 @@
     </p>
 
     <p><h3>Generated data</h3></p>
+    Still in progress. <br>
+    <table>
+        <tr>
+            <th>Model</th>
+            <th>Dataset</th>
+            <th>Target utterances</th>
+            <th>Generated utterances</th>
+            <th>Selected utterances</th>
+        </tr>
+        <tr>
+            <td>XTTS</td>
+            <td>Voxpopuli</td>
+            <td>6</td>
+            <td>2846</td>
+        </tr>
+        <tr>
+            <td>XTTS</td>
+            <td>CTU Test</td>
+            <td>4</td>
+            <td>2000</td>
+        </tr>
+        <tr>
+            <td>XTTS</td>
+            <td>CTU Test</td>
+            <td>10</td>
+            <td>2000</td>
+        </tr>
+        <tr>
+            <td>Free VC</td>
+            <td>Voxpopuli</td>
+            <td>1</td>
+            <td>2846</td>
+        </tr>
+        <tr>
+            <td>Free VC</td>
+            <td>CTU Test</td>
+            <td>1</td>
+            <td>1801</td>
+        </tr>
+        <tr>
+            <td>kNN VC</td>
+            <td>CTU Test</td>
+            <td>5</td>
+            <td>1801</td>
+        </tr>
+        <tr>
+            <td>kNN VC</td>
+            <td>CTU Test</td>
+            <td>10</td>
+            <td>1801</td>
+        </tr>
+        <tr>
+            <td>Seed VC</td>
+            <td>CTU Test</td>
+            <td>1</td>
+            <td>1801</td>
+        </tr>
+
+    </table>
     <p><h3>Examples</h3></p>
     <p>Examples were randomly select from subsets.</p>
     <p><h4>XTTS</h4></p>
