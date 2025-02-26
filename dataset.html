@@ -91,6 +91,7 @@
             <th>Target utterances</th>
             <th>Generated utterances</th>
             <th>Selected utterances</th>
+            <th>Lenght of selected utterances [hours]</th>
         </tr>
         <tr>
             <td>XTTS</td>
@@ -154,6 +155,16 @@
     <p><h4>Free VC</h4></p>
     <p><h4>Seed-VC</h4></p>
     <p><h4>kNN-VC</h4></p>
+    <p><h3>Artifacts</h3></p>
+
+    <p>
+        One unexpected artifact occurs when the CTU Test dataset is used for XTTS. In this dataset, utterances include spoken representations of punctuation marks, such 
+        as "comma" ("čárka" in Czech) and "dot" ("tečka" in Czech), instead of relying on natural intonation to indicate sentence boundaries. As a result, an artifact commonly 
+        appears at the end of many generated utterances, producing a sound resembling "tečka".
+        This suggests that the speaker embedding extractor for XTTS interprets these spoken punctuation marks as part of the speaker’s vocal characteristics, leading to their 
+        unintended presence at the end of synthesized sentences. 
+        Although this artifact may be unpleasant for the listener, it does not negatively impact the effectiveness of speech in the task of speech spoof detection
+    </p>
     
 
 </body>
