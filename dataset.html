@@ -59,6 +59,14 @@
         [Automatically compiled from: <a href="https://github.com/Plachtaa/seed-vc/tree/main" target="_blank"> Git Hub</a>] 
 
     </p>
+    <p>
+        <u>Diff-HierVC:</u> Diff-HierVC is a diffusion-based hierarchical voice conversion system designed to enhance pitch accuracy and speaker adaptation in zero-shot scenarios. The architecture comprises 
+        two primary components: DiffPitch and DiffVoice. DiffPitch generates fundamental frequency (F₀) contours aligned with the target speaker's style, while DiffVoice utilizes 
+        these generated F₀ contours alongside a source-filter encoder to produce high-quality Mel-spectrograms that capture the desired voice characteristics. The source-filter encoder 
+        effectively disentangles speech components, and the incorporation of a masked prior within the diffusion models further refines speaker adaptation. Experimental evaluations 
+        demonstrate that Diff-HierVC outperforms existing methods in pitch generation and voice style transfer, achieving a character error rate (CER) of 0.83% and an equal error rate 
+        (EER) of 3.29% in zero-shot voice conversion tasks. [Automatically compiled from: <a href="https://github.com/hayeong0/Diff-HierVC" target="_blank"> Git Hub</a>] 
+    </p>
 
 
     
@@ -154,10 +162,19 @@
             <td>1</td>
             <td>1801</td>
         </tr>
-
         <tr>
-            <th></th>
+            <td>Seed VC</td>
+            <td>Common Voice</td>
+            <td>1</td>
+            <td>2550</td>
         </tr>
+        <tr>
+            <td>Diff-HierVC</td>
+            <td>CTU Test</td>
+            <td>1</td>
+            <td>2000</td>
+        </tr>
+        
 
     </table>
     <p>* target utterances per one source utterance</p>
