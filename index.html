@@ -5,6 +5,15 @@
     <title>Speech spoof detection Czech</title>
 </head>
 <body>
+    <style>
+        table {
+          border:1px solid black;
+        }
+        th,td {
+            padding: 3px;
+            text-align: center;
+        }
+    </style>
     <a href="https://fel.cvut.cz/en/research-groups/speech-processing-laboratory/about-group" target="_blank"><img src="speech_lab.png" alt="img speech_lab" height="50" style="float: right;"></a>
     <h2>Speech spoof (deepfake) detection for Czech language</h2>
     <p>This is an overview of the progress of diploma thesis aimed at developing a tool for detecting spoofed speech in Czech.</p>
@@ -29,22 +38,130 @@
     <p>
         Examples of fraud involving speech spoofing and deepfakes can be found <a href="fraud.html">here</a>
     </p>
-
+    <b>Webpage work in progress</b>
     <hr>
-
+    
+    <h2>Spoof detection</h2>
+    <p>This section describes </p>
+    <hr>
+    <h3>One class classification</h3>
+    <p>The One-Class Softmax (OC-Softmax) loss function enhances spoofing detection in automatic speaker verification (ASV) systems by compacting bona fide speech 
+        embeddings while pushing spoofed speech representations away. Instead of treating spoofed and bona fide samples as separate classes, OC-Softmax defines a 
+        hypersphere centered around bona fide embeddings and enforces a margin to separate them from outliers. During training, a cosine-based decision boundary ensures that 
+        bona fide speech remains within a constrained region, while spoofed speech is pushed beyond a threshold margin. The network structure consists of a CNN-based feature 
+        extractor, followed by an embedding layer, where OC-Softmax optimizes the distance between bona fide and spoofed embeddings. A radius-based decision function determines 
+        whether an input belongs to the bona fide class, enabling the model to detect previously unseen spoofing attacks without requiring spoofed training data. This approach 
+        improves generalization, robustness, and security in ASV systems. [Automaticaly compiled from <a href="https://arxiv.org/pdf/2010.13995" target="_blank">Arxiv</a>]</p>
     <p>
-        Spoof detection - comming soon
+    <p>
+
+
+        There are two possible approaches for classification with this model:
+        Binary Classification – This approach utilizes the last layer with two neurons, applying softmax or argmax for decision-making. Not recommended when using OC Softmax, as this layer is not utilized during the training stage.
+        Recommended when using the traditional approach with Cross-Entropy loss.
+        One-Class Loss – This method leverages the penultimate fully connected layer, where a one-class loss function is used during training to 
+        compute a score. Based on the evaluation dataset (or any other relevant criteria), a classification threshold can be determined. Additionally, it is 
+        possible to estimate probabilities or confidence scores for classification decisions.
+    </p>
+        Metrics computed from last classification layer: 
+        <li>False positive and negative rate (FPR, FNR)</li>
+        <li>Equal error rate (EER)</li>
+    </p>
+    <p>
+        Metrics calculated from OC softmax score:
+        <li>Treshold for score so FPR and FNR are equal and equal to ideal EER (also computed) [taken from ASV Spoof Challenge]</li>
+        <li>FPR, FNR and EER for binary classification based on one class score and treshhold computed during developing stage.</li>
+    </p>
+    <h3>One class classification - Experiment 1</h3>
+    <p>
+        The goal of the first experiment was to evaluate the model's ability to generalize to a different language dataset than the one it was trained on.
+        The dataset described above was used with a pretrained network from the ASVspoof 2019 dataset, employing a one-class loss function. 
+        The entire SP Spoof CS dataset was utilized for this evaluation.
+        
+    </p>
+    <h4>Results</h4>
+    <p>
+        
+        
 
     </p>
+    <h3>One class classification - Experiment 2</h3>
+    The goal of this experiment was to conduct a limited fine-tuning of the network and train OC Softmax on the SP Spoof CS dataset. The objective was to familiarize the system with a 
+    different language, dataset, speakers, and VC/TTS tools, as the results from Experiment 1 were unsatisfactory. The dataset was randomly shuffled and divided into train, development, and test subsets following a 60% : 10% : 30% ratio.
+    System was finetuded for 2 epochs with learning rate 0.000003. For simplicity, the data was classified into two groups—bona fide and spoof—based on the computed score. The classification threshold was determined during the development stage.
+    </p>
+    <h4>Overall results</h4>
+    <table>
 
-    <b>Webpage work in progress</b>
+        
+        <tr><th>Treshold ideal</th> <td>0.406</td></tr>
+        <tr><th>EER ideal</th><td>0.0089</td></tr>
+        <tr><td>---</td></tr>
+        <tr><th>Treshold from dev</th><td>0.776</td></tr>
+        
+        <tr><th>EER</th><td>0.015</td></tr>
+        <tr><th>FPR</th><td>0.029</td></tr>
+        <tr><th>FNR</th><td>0.001</td></tr>
+        
+    </table>
+    <h4>TTS/VC tools results</h4>
+    <table>
+        <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
+        <tr><th>Bonafide</th><td>0.005</td><td>0.144</td></tr>
+        <tr><th>XTTS</th><td>0.002</td><td>0.001</td></tr>
+        <tr><th>FVC</th><td>0.009</td><td>0.001</td></tr>
+        <tr><th>kNN VC</th><td>0.006</td><td>0.000</td></tr>
+        <tr><th>Seed VC</th><td>0.009</td><td>0.002</td></tr>
+        <tr><th>Diff-Hier VC</th><td>0.000</td><td>0.000</td></tr>
+    </table>
+    <p>
+        *  threshold computed from test dataset, so FPR and FNR would be same <br>
+        ** treshhold computed from development dataset - more realistic for usage
+    </p>
+    <p>
+        This experiment demonstrates that the model's structure is capable of rapid fine-tuning, requiring only two epochs to achieve promising results. The evaluation was conducted on a randomly split dataset, where all types of 
+        attacks and all source datasets were included across the train, development, and test subsets. So for the seen attacks it provides promising results.
+    </p>
+    <h3>One class classification - Experiment 3</h3>
+    <p>
+        The goal of this experiment was to modify the previous setup by introducing an unseen attack (a new TTS/VC tool) into the test dataset. 
+        To achieve this, utterances generated by Seed VC were included only in the test set. The remaining utterances were randomly split using the same ratio as in the previous experiment 
+        (60% train, 10% dev, 30% test).
+    </p>
+    <h4>Overall results</h4>
+    <table>
 
+        
+        <tr><th>Treshold ideal</th> <td>0.934</td></tr>
+        <tr><th>EER ideal</th><td>0.116</td></tr>
+        <tr><td>---</td></tr>
+        <tr><th>Treshold from dev</th><td>0.0.509</td></tr>
+        
+        <tr><th>EER</th><td>0.143</td></tr>
+        <tr><th>FPR</th><td>0.011</td></tr>
+        <tr><th>FNR</th><td>0.275</td></tr>
+        
+    </table>
+    <h4>TTS/VC tools results</h4>
+    <table>
+        <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
+        <tr><th>Bonafide</th><td>0.058</td><td>0.006</td></tr>
+        <tr><th>XTTS</th><td>0.0</td><td>0.005</td></tr>
+        <tr><th>FVC</th><td>0.0</td><td>0.009</td></tr>
+        <tr><th>kNN VC</th><td>0.0</td><td>0.004</td></tr>
+        <tr><th>Seed VC</th><td>0.161</td><td>0.373</td></tr>
+        <tr><th>Diff-Hier VC</th><td>0.0</td><td>0.000</td></tr>
+    </table>
+    <p>
+        *  threshold computed from test dataset, so FPR and FNR would be same <br>
+        ** treshhold computed from development dataset - more realistic for usage
+    </p>
+    <p>
+        These results indicate extreme overfitting. After only two epochs with a very low learning rate, the model is able to classify known attacks, but its performance on unseen attacks is significantly worse.
+        This issue is evident in the histograms below, where the OC scores of the unseen attack (Seed VC) overlap with the bona fide scores, highlighting the model's inability to distinguish between them effectively.
+    </p>
 
-
-
-
-
-</p>
+    <img src="oc_seed_test.png" width="80%">
 
 </body>
 </html>
