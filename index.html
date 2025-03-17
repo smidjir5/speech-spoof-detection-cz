@@ -169,6 +169,53 @@
     <img src="oc_seed_test.png" width="80%">
     <br>
     <h3>One class class Classification - Experiment 4</h3>
+    <p>
+        In this experiment One-class loss function was enhanced. The proposed loss function introduces an uncertainty-aware penalty for speech spoof detection by applying a softplus-based 
+        regularization to output scores within a predefined margin around the decision boundary. Specifically, predictions that fall between the thresholds r_fake-margin and r_real+margin
+        are penalized using a scaled softplus function, encouraging the model to make more confident predictions. Outside this uncertain region, no additional loss is applied. This approach enhances decision boundary sharpness while maintaining gradient stability, leading to improved robustness against ambiguous spoofed speech samples.
+    </p>
+    <h4>Overall results</h4>
+    <table>
+
+        
+        <tr><th>Treshold ideal</th> <td>0.288</td></tr>
+        <tr><th>EER ideal</th><td>0.065</td></tr>
+        <tr><td>---</td></tr>
+        <tr><th>Treshold from dev</th><td>0.0.509</td></tr>
+        
+        <tr><th>EER</th><td>0.136</td></tr>
+        <tr><th>FPR</th><td>0.005</td></tr>
+        <tr><th>FNR</th><td>0.268</td></tr>
+        
+    </table>
+    <h4>TTS/VC tools results</h4>
+    <table>
+        <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
+        <tr><th>Bonafide</th><td>0.032</td><td>0.002</td></tr>
+        <tr><th>XTTS</th><td>0.0</td><td>0.0003</td></tr>
+        <tr><th>FVC</th><td>0.0</td><td>0.006</td></tr>
+        <tr><th>kNN VC</th><td>0.0</td><td>0.002</td></tr>
+        <tr><th>Seed VC</th><td>0.09</td><td>0.369</td></tr>
+        <tr><th>Diff-Hier VC</th><td>0.0</td><td>0.0001</td></tr>
+    </table>
+    <p>
+        *  threshold computed from test dataset, so FPR and FNR would be same <br>
+        ** treshhold computed from development dataset - more realistic for usage
+    </p>
+
+    <p>
+        The results demonstrate promising performance when using a threshold calculated from the test data (ideal case). 
+        With a properly chosen threshold, this method reduces the Equal Error Rate (EER) by half.
+
+        Interestingly, for spoofed scores, the score histograms remain relatively narrow, whereas for bona fide scores, the histograms broaden significantly. This suggests that the applied method affects 
+        genuine speech more than spoofed speech, leading to greater score variability in bona fide samples.
+
+    Additionally, it appears that determining the threshold from the development dataset by balancing the False Positive Rate (FPR) and False Negative Rate (FNR) may not 
+    be sufficient for optimal performance.
+    </p>
+
+        <tr><td><img src="oc_seed_test_botside_margin_0.3.png" width="80%"></td></tr>
+
 
 </body>
 </html>
