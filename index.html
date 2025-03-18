@@ -81,12 +81,35 @@
         The goal of the first experiment was to evaluate the model's ability to generalize to a different language dataset than the one it was trained on.
         The dataset described above was used with a pretrained network from the ASVspoof 2019 dataset, employing a one-class loss function. 
         The entire SP Spoof CS dataset was utilized for this evaluation.
+    
+    <h4>Overall results</h4>
+    <table>
+   !<!--model1028-->
         
-    </p>
-    <h4>Results</h4>
+        <tr><th>Treshold ideal</th> <td>-0.94</td></tr>
+        <tr><th>EER ideal</th><td>0.41</td></tr>
+        <tr><td>---</td></tr>
+        <tr><th>Treshold from dev</th><td>--</td></tr>
+        
+        <tr><th>EER</th><td>--</td></tr>
+        <tr><th>FPR</th><td>--</td></tr>
+        <tr><th>FNR</th><td>--</td></tr>
+        
+    </table>
+    <h4>TTS/VC tools results</h4>
+    <table>
+        <tr><th>Tool</th><th>EER ideal*</th><th>ER**</th></tr>
+        <tr><th>Bonafide</th><td>0.208</td><td>--</td></tr>
+        <tr><th>XTTS</th><td>0.210</td><td>--</td></tr>
+        <tr><th>FVC</th><td>0.000</td><td>--</td></tr>
+        <tr><th>kNN VC</th><td>0.347</td><td>--</td></tr>
+        <tr><th>Seed VC</th><td>0.268</td><td>--</td></tr>
+        <tr><th>Diff-Hier VC</th><td>0.125</td><td>--</td></tr>
+    </table>
     <p>
-        
-        
+        *  threshold computed from test dataset, so FPR and FNR would be same <br>
+        ** Error rate - FPR for bonafide, FNR for spoof. Treshhold computed from development dataset - more realistic for usage
+    </p>    
 
     </p>
     <h3>One class classification - Experiment 2</h3>
@@ -111,17 +134,17 @@
     </table>
     <h4>TTS/VC tools results</h4>
     <table>
-        <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
-        <tr><th>Bonafide</th><td>0.005</td><td>0.144</td></tr>
+        <tr><th>Tool</th><th>EER ideal*</th><th>ER**</th></tr>
+        <tr><th>Bonafide</th><td>0.005</td><td>0.029</td></tr>
         <tr><th>XTTS</th><td>0.002</td><td>0.001</td></tr>
         <tr><th>FVC</th><td>0.009</td><td>0.001</td></tr>
-        <tr><th>kNN VC</th><td>0.006</td><td>0.000</td></tr>
-        <tr><th>Seed VC</th><td>0.009</td><td>0.002</td></tr>
+        <tr><th>kNN VC</th><td>0.006</td><td>0.001</td></tr>
+        <tr><th>Seed VC</th><td>0.009</td><td>0.001</td></tr>
         <tr><th>Diff-Hier VC</th><td>0.000</td><td>0.000</td></tr>
     </table>
     <p>
         *  threshold computed from test dataset, so FPR and FNR would be same <br>
-        ** treshhold computed from development dataset - more realistic for usage
+        ** Error rate - FPR for bonafide, FNR for spoof. Treshhold computed from development dataset - more realistic for usage
     </p>
     <p>
         This experiment demonstrates that the model's structure is capable of rapid fine-tuning, requiring only two epochs to achieve promising results. The evaluation was conducted on a randomly split dataset, where all types of 
@@ -140,7 +163,7 @@
         <tr><th>Treshold ideal</th> <td>0.934</td></tr>
         <tr><th>EER ideal</th><td>0.116</td></tr>
         <tr><td>---</td></tr>
-        <tr><th>Treshold from dev</th><td>0.0.509</td></tr>
+        <tr><th>Treshold from dev</th><td>0.509</td></tr>
         
         <tr><th>EER</th><td>0.143</td></tr>
         <tr><th>FPR</th><td>0.011</td></tr>
@@ -150,16 +173,16 @@
     <h4>TTS/VC tools results</h4>
     <table>
         <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
-        <tr><th>Bonafide</th><td>0.058</td><td>0.006</td></tr>
-        <tr><th>XTTS</th><td>0.0</td><td>0.005</td></tr>
-        <tr><th>FVC</th><td>0.0</td><td>0.009</td></tr>
-        <tr><th>kNN VC</th><td>0.0</td><td>0.004</td></tr>
-        <tr><th>Seed VC</th><td>0.161</td><td>0.373</td></tr>
+        <tr><th>Bonafide</th><td>0.058</td><td>0.011</td></tr>
+        <tr><th>XTTS</th><td>0.0</td><td>0.010</td></tr>
+        <tr><th>FVC</th><td>0.0</td><td>0.017</td></tr>
+        <tr><th>kNN VC</th><td>0.0</td><td>0.007</td></tr>
+        <tr><th>Seed VC</th><td>0.161</td><td>0.75</td></tr>
         <tr><th>Diff-Hier VC</th><td>0.0</td><td>0.000</td></tr>
     </table>
     <p>
         *  threshold computed from test dataset, so FPR and FNR would be same <br>
-        ** treshhold computed from development dataset - more realistic for usage
+        ** Error rate - FPR for bonafide, FNR for spoof. Treshhold computed from development dataset - more realistic for usage
     </p>
     <p>
         These results indicate overfitting to known types of attack. After only two epochs with a very low learning rate, the model is able to classify known attacks, but its performance on unseen attacks is significantly worse.
@@ -174,6 +197,7 @@
         regularization to output scores within a predefined margin around the decision boundary. Specifically, predictions that fall between the thresholds r_fake-margin and r_real+margin
         are penalized using a scaled softplus function, encouraging the model to make more confident predictions. Outside this uncertain region, no additional loss is applied. This approach enhances decision boundary sharpness while maintaining gradient stability, leading to improved robustness against ambiguous spoofed speech samples.
     </p>
+
     <h4>Overall results</h4>
     <table>
 
@@ -181,7 +205,7 @@
         <tr><th>Treshold ideal</th> <td>0.288</td></tr>
         <tr><th>EER ideal</th><td>0.065</td></tr>
         <tr><td>---</td></tr>
-        <tr><th>Treshold from dev</th><td>0.0.509</td></tr>
+        <tr><th>Treshold from dev</th><td>0.197</td></tr>
         
         <tr><th>EER</th><td>0.136</td></tr>
         <tr><th>FPR</th><td>0.005</td></tr>
@@ -191,16 +215,16 @@
     <h4>TTS/VC tools results</h4>
     <table>
         <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
-        <tr><th>Bonafide</th><td>0.032</td><td>0.002</td></tr>
-        <tr><th>XTTS</th><td>0.0</td><td>0.0003</td></tr>
-        <tr><th>FVC</th><td>0.0</td><td>0.006</td></tr>
-        <tr><th>kNN VC</th><td>0.0</td><td>0.002</td></tr>
-        <tr><th>Seed VC</th><td>0.09</td><td>0.369</td></tr>
-        <tr><th>Diff-Hier VC</th><td>0.0</td><td>0.0001</td></tr>
+        <tr><th>Bonafide</th><td>0.032</td><td>0.005</td></tr>
+        <tr><th>XTTS</th><td>0.0</td><td>0.0007</td></tr>
+        <tr><th>FVC</th><td>0.0</td><td>0.013</td></tr>
+        <tr><th>kNN VC</th><td>0.0</td><td>0.003</td></tr>
+        <tr><th>Seed VC</th><td><b>0.09</b></td><td>0.740</td></tr>
+        <tr><th>Diff-Hier VC</th><td>0.0</td><td>0.001</td></tr>
     </table>
     <p>
         *  threshold computed from test dataset, so FPR and FNR would be same <br>
-        ** treshhold computed from development dataset - more realistic for usage
+        ** Error rate - FPR for bonafide, FNR for spoof. Treshhold computed from development dataset - more realistic for usage
     </p>
 
     <p>
@@ -216,6 +240,41 @@
 
         <tr><td><img src="oc_seed_test_botside_margin_0.3.png" width="80%"></td></tr>
 
-
+        <h4>Promising solution: </h4>
+        <p>
+            Even though bona fide scores do not follow a normal distribution, it appears effective to set the classification threshold as: mean(bonafide_scores) - k*std(bonafide_scores) 
+            calculated from the development dataset.
+            Adjusting k allows for fine-tuning the classification balance based on the desired objective—a more balanced classification or a higher False Positive Rate (FPR) for increased security. 
+            Below are the results for k = 1.
+        </p>
+        <h4>Overall results</h4>
+        <!--models_seed_test_enhanced_oc-->
+        <table>
+    
+            
+            <tr><th>Treshold ideal</th> <td>0.288</td></tr>
+            <tr><th>EER ideal</th><td>0.065</td></tr>
+            <tr><td>---</td></tr>
+            <tr><th>Treshold from dev</th><td>0.364</td></tr>
+            
+            <tr><th>EER</th><td>0.096</td></tr>
+            <tr><th>FPR</th><td>0.180</td></tr>
+            <tr><th>FNR</th><td>0.014</td></tr>
+            
+        </table>
+        <h4>TTS/VC tools results</h4>
+        <table>
+            <tr><th>Tool</th><th>EER ideal*</th><th>EER**</th></tr>
+            <tr><th>Bonafide</th><td>0.032</td><td style="color: red;">0.18</td></tr>
+            <tr><th>XTTS</th><td>0.0</td><td>0.000</td></tr>
+            <tr><th>FVC</th><td>0.0</td><td>0.000</td></tr>
+            <tr><th>kNN VC</th><td>0.0</td><td>0.000</td></tr>
+            <tr><th>Seed VC</th><td>0.09</td><td><b>0.039</b></td></tr>
+            <tr><th>Diff-Hier VC</th><td>0.0</td><td>0.000</td></tr>
+        </table>
+        <p>
+            *  threshold computed from test dataset, so FPR and FNR would be same <br>
+            ** Error rate - FPR for bonafide, FNR for spoof. Treshhold computed from development dataset - more realistic for usage
+        </p>
 </body>
 </html>
