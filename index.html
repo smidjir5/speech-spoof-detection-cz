@@ -108,11 +108,13 @@
         <tr><th>Diff-Hier VC</th><td>0.125</td><td>--</td></tr>
     </table>
     <p>
-        *  threshold computed from test dataset, so FPR and FNR would be same <br>
+        *  threshold computed from test dataset, so FPR and FNR on development dataset would be same <br>
         ** Error rate - FPR for bonafide, FNR for spoof. Treshhold computed from development dataset - more realistic for usage
     </p>    
-
+    <p>
+        As evidenced by the calculated ideal EER, the performance is not satisfactory. Further adjustments and fine-tuning will be necessary to improve the model's effectiveness.
     </p>
+    
     <h3>One class classification - Experiment 2</h3>
     The goal of this experiment was to conduct a limited fine-tuning of the network and train OC Softmax on the SP Spoof CS dataset. The objective was to familiarize the system with a 
     different language, dataset, speakers, and VC/TTS tools, as the results from Experiment 1 were unsatisfactory. The dataset was randomly shuffled and divided into train, development, and test subsets following a 60% : 10% : 30% ratio.
