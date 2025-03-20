@@ -329,10 +329,11 @@
         <img src="oc_xtts_fvc_test_botside_margin_0.3.png" width="80%">
         
         <h4>Unseen bonafide dataset problem</h4>
+        <p>
         To test generalization ability completely different in-house bonafide dataset with 2 245 files was used. This shows overfitting of the network for bonafide train dataset (not  specific utterances) - 
         most propably model cannot generalize recording conditions (microphone quality, RIR ...) and speakers variability. 
         This can be observed from FPR = 0.732 and from score histogram below. 
-
+     </p>
         <img src="test_unseen_ds.png" width="25%">
         <p>
             This can be seen from s-SNE projections of ouput features of resnet. System canot push feature vectors into right region.
