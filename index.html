@@ -339,13 +339,15 @@
             This problem is clearly visible in s-SNE projections of ouput features of resnet. System canot push feature vectors into right region.
         </p>
 
-        <img src="tsne_t_train.png" width="40%">
-        <p>
-            <i>t-SNE of features of train dataset (bonafide: blue - 0, spoof: another colors 3,4,5), and unseen bonafide dataset (<b>violet - 21</b>)</i>
-        </p>
         <img src="tsne_t_test.png" width="40%">
         <p>
             <i>t-SNE of features of test dataset (bonafide: blue - 0, spoof: another colors - unseen attack 1, 2; seen attack - 3, 4, 5), and unseen bonafide dataset (<b>pink - 21</b>)</i>
+        </p>
+
+        <p>
+            Potencial cause of this problem was found during analysis of unseen dataset signals. Compared to signals from another datasets, there is significant difference in 
+            DC. Shape and amplitude of DC is different and some significant peaks can bee seen. This is probably caused by microphone which was used for recording this dataset. 
+            Known fact is, that this microfon used in callcentrums had some active noise cancelling and some active adjustmens.
         </p>
 
 </body>
